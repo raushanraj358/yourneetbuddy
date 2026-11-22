@@ -79,10 +79,8 @@ index.html → assets/js/app.js (router, nav, onboarding, timers, boot)
 - Edge Function: CORS + `ALLOWED_ORIGINS` check, then the caller is identified (Supabase user JWT, else guest by IP). Daily usage is counted
   via the `bump_neet_ai_usage` RPC (service role only). Default limits: 25/day for users, 5/day for guests.
 
-### Shared Supabase project
-- Everything in the database is prefixed `neet_` and the function is `neet-ai`, so this app can live in the same Supabase project as
-  YourIASBuddy. Never touch the un-prefixed `user_data` / `ai_usage` objects; they belong to YourIASBuddy. Edge Function secrets are
-  project-wide (e.g. `ALLOWED_ORIGINS` affects both sites).
+### Supabase
+- YourNEETBuddy has its own Supabase project (separate from YourIASBuddy). Database objects are named `neet_*` and the function `neet-ai`.
 
 ### Database (`supabase/schema.sql`)
 - Must stay idempotent (safe to re-run). RLS on every table; `neet_ai_usage` intentionally has no policies (service role only).

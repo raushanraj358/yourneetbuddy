@@ -1,5 +1,4 @@
--- YourNEETBuddy cloud profiles. Names are prefixed with neet_ so this can run in a new Supabase project
--- or alongside YourIASBuddy in the same project.
+-- YourNEETBuddy cloud profiles (database objects are prefixed with neet_).
 -- Run once in Supabase → SQL Editor → New query → Run.
 -- Each signed-in user gets one row holding their whole study data (tasks, sessions, notes, quizzes…).
 -- Row-level security ensures a user can only ever read or write their own row.

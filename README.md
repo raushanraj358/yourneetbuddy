@@ -36,8 +36,7 @@ It shares its architecture with [YourIASBuddy](https://youriasbuddy.com).
 | Free AI | Supabase Edge Function `neet-ai` | Holds the Gemini key |
 | AI model | Google Gemini free tier | Free as long as billing is **not** enabled on the Google project |
 
-Database objects are prefixed `neet_` and the function is called `neet-ai`, so YourNEETBuddy can run **in the same Supabase project as
-YourIASBuddy** (that's how `assets/js/config.js` is set up now) or in a project of its own.
+YourNEETBuddy has its own Supabase project and its own Google OAuth client, separate from YourIASBuddy.
 
 ## One-time setup
 
@@ -53,24 +52,21 @@ The site works in guest mode before any of this is done (offline notes, chapter 
 4. Repo → **Settings → Pages → Custom domain**: `yourneetbuddy.com` → Save, then tick **Enforce HTTPS** once the certificate is ready.
 
 ### 2. Supabase: database + free AI
-Using the existing YourIASBuddy project (already in `config.js`) or a new one:
+In the YourNEETBuddy Supabase project (`ykbogvelabzgylpxwyif`, already in [`assets/js/config.js`](assets/js/config.js)):
 1. **SQL Editor → New query**: paste all of [`supabase/schema.sql`](supabase/schema.sql) → **Run**.
 2. **Edge Functions → Deploy a new function → Via Editor**: name it exactly `neet-ai`, paste the whole of
    [`supabase/functions/neet-ai/index.ts`](supabase/functions/neet-ai/index.ts) → **Deploy**. Turn **OFF** "Verify JWT".
-3. Secrets: `GEMINI_API_KEY` is shared by all functions in a project (already set if you reuse the YourIASBuddy project).
+3. **Edge Functions → Secrets**: add `GEMINI_API_KEY` (from https://aistudio.google.com/apikey; keep billing off).
    Optional: `ALLOWED_ORIGINS`, `AI_DAILY_LIMIT` (default 25), `AI_GUEST_DAILY_LIMIT` (default 5), `GEMINI_MODEL`.
-   ⚠️ If you set `ALLOWED_ORIGINS` as a project secret, it applies to **both** sites, so list both domains in it.
-4. If you made a **new** project, put its Project URL and anon/publishable key in [`assets/js/config.js`](assets/js/config.js).
 
 ### 3. Google sign-in
-1. Supabase → **Authentication → URL Configuration → Redirect URLs**: add `https://yourneetbuddy.com/`, `https://www.yourneetbuddy.com/`
-   and `http://localhost:5173/`. (In a shared project leave the Site URL as it is; in a new project set it to `https://yourneetbuddy.com/`.)
-2. Google Cloud Console → your OAuth client → **Authorised JavaScript origins**: add `https://yourneetbuddy.com`. On **Branding**, add
-   `yourneetbuddy.com` under Authorised domains.
-3. In a new Supabase project, also enable the Google provider with the client ID/secret and add its callback URL to the OAuth client.
-
-Note: in a shared project the Google consent screen shows the OAuth app's name (YourIASBuddy). Use a separate project and OAuth client if
-you want it to say YourNEETBuddy.
+1. Supabase → **Authentication → URL Configuration**: Site URL `https://yourneetbuddy.com/`; Redirect URLs
+   `https://yourneetbuddy.com/`, `https://www.yourneetbuddy.com/`, `https://raushanraj358.github.io/yourneetbuddy/`, `http://localhost:5173/`.
+2. Google Cloud Console → project **YourNEETBuddy** → **Google Auth Platform**: External audience; Branding with home/privacy/terms
+   pages on `yourneetbuddy.com` and authorised domains `yourneetbuddy.com` + `ykbogvelabzgylpxwyif.supabase.co`; then publish the app.
+3. **Clients → Create client → Web application**: JavaScript origins `https://yourneetbuddy.com`, `https://www.yourneetbuddy.com`,
+   `http://localhost:5173`; redirect URI `https://ykbogvelabzgylpxwyif.supabase.co/auth/v1/callback`.
+4. Supabase → **Authentication → Sign In / Providers → Google**: enable, paste the client ID and secret, Save.
 
 ## Run locally
 

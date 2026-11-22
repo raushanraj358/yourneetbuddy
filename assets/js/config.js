@@ -1,12 +1,11 @@
 // Public site configuration. GitHub Pages serves static files only, so these values live here.
 // Both values below are designed to be public: row-level security (supabase/schema.sql) protects each user's data,
 // and the Gemini key stays secret inside the Supabase Edge Function (supabase/functions/neet-ai).
-// Currently points at the same Supabase project as YourIASBuddy; YourNEETBuddy uses its own neet_* tables and "neet-ai" function there.
 const SITE = {
   // Supabase → Project Settings → API (or "Connect"): Project URL, e.g. 'https://abcdefghijkl.supabase.co'
-  supabaseUrl: 'https://cuwquhesnspfcofhuxvq.supabase.co',
+  supabaseUrl: 'https://ykbogvelabzgylpxwyif.supabase.co',
   // Supabase → Project Settings → API Keys: the "anon" / "publishable" key (NOT the service_role / secret key)
-  supabaseAnonKey: 'sb_publishable_5dY8NUhMPxNllhcbuZXzIQ_X3LCHZqC',
+  supabaseAnonKey: 'sb_publishable_37EixEtKo3k-3HdCnNlS7g_7c8zzJz-',
 
   googleAuth: true, // "Continue with Google" (enable the Google provider in Supabase first)
   emailAuth: true, // "Email me a sign-in link" as a fallback

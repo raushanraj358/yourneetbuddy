@@ -7,7 +7,7 @@ import { esc } from './utils.js';
 
 const SUPABASE_ESM = 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.117.3/+esm';
 const META_KEY = 'ynb:sync';
-const TABLE = 'neet_user_data'; // prefixed so this site can share a Supabase project with YourIASBuddy
+const TABLE = 'neet_user_data';
 const PUSH_DELAY = 2500;
 
 let sb = null;
