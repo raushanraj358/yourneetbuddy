@@ -1,0 +1,10 @@
+{
+  "name": "yourneetbuddy",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "YourNEETBuddy \u2014 NEET (UG) study companion (static site on GitHub Pages + Supabase for accounts and AI)",
+  "engines": {
+    "node": ">=18"
+  }
+}
