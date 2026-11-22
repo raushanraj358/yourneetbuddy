@@ -146,7 +146,7 @@ function onboarding() {
   openModal({
     title: 'Welcome',
     body: `
-      <div class="onboard-hero"><div class="brand onboard-brand"><img class="brand-mark" src="assets/img/logo-mark.svg" alt="" width="64" height="64"><span class="brand-text"><span class="brand-name">Your<b>NEET</b>Buddy<i>.com</i></span><span class="brand-tag">Learn · Practise · Revise · Crack NEET</span></span></div><h3>Your NEET journey, organised.</h3>
+      <div class="onboard-hero"><div class="brand onboard-brand"><img class="brand-mark" src="assets/img/logo-mark.png" alt="" width="64" height="64"><span class="brand-text"><span class="brand-name">Your<b>NEET</b>Buddy<i>.com</i></span><span class="brand-tag">Learn · Practise · Revise · Crack NEET</span></span></div><h3>Your NEET journey, organised.</h3>
       <p class="muted" style="margin:6px 0 18px">NCERT chapter notes, offline tests, AI quizzes, mock tests, goals and a focus timer, all in one calm place. ${cloud().configured ? 'Already have an account? Sign in to bring back your progress.' : 'Your data stays on this device.'}</p></div>
       <div class="stack">
         <div class="field"><label for="obName">What should we call you?</label><input class="input" id="obName" placeholder="Your name" value="${esc(p.name)}"></div>
