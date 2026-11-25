@@ -1,13 +1,23 @@
 // Lazy loader for the offline chapter notes and question bank (assets/js/content/<subject>.js).
 // Each subject file is loaded only when a page needs it, so the first page load stays light.
+// Extra practice questions live in assets/js/quizbank/<subject>.js (BANK: chapterId → items) and are appended to each chapter's quiz.
 import { SUBJECTS, chaptersOf } from './data.js';
 
 const cache = {};
 
+function mergeBank(content, bank) {
+  for (const [id, items] of Object.entries(bank)) {
+    const c = (content[id] ||= {});
+    const seen = new Set((c.quiz ||= []).map((q) => q[0].trim().toLowerCase()));
+    for (const q of items) if (!seen.has(q[0].trim().toLowerCase())) { seen.add(q[0].trim().toLowerCase()); c.quiz.push(q); }
+  }
+  return content;
+}
+
 /** Resolves to { chapterId: { overview, sections, formulas, traps, quiz } } for one subject. */
 export function loadSubject(sub) {
   if (!SUBJECTS.some((s) => s.id === sub)) return Promise.resolve({});
-  cache[sub] ||= import(`./content/${sub}.js`).then((m) => m.CONTENT || {}).catch((e) => {
+  cache[sub] ||= Promise.all([import(`./content/${sub}.js`), import(`./quizbank/${sub}.js`)]).then(([m, b]) => mergeBank(m.CONTENT || {}, b.BANK || {})).catch((e) => {
     delete cache[sub];
     throw e;
   });

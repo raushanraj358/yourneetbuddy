@@ -17,6 +17,8 @@ import * as settings from './views/settings.js';
 import * as profile from './views/profile.js';
 import * as syllabus from './views/syllabus.js';
 import * as goals from './views/goals.js';
+import * as faq from './views/faq.js';
+import * as contact from './views/contact.js';
 import { initCloud, cloud, onCloudChange } from './cloud.js';
 
 const ROUTES = {
@@ -31,6 +33,8 @@ const ROUTES = {
   resources: { title: 'Resources', icon: 'library', view: resources, group: 'Learn', sub: 'Curated sources and your own reading list' },
   profile: { title: 'Profile', icon: 'user', view: profile, group: 'You', sub: 'Your account, goal and journey so far' },
   settings: { title: 'Settings', icon: 'settings', view: settings, group: 'You', sub: 'AI, appearance and data' },
+  contact: { title: 'Contact', icon: 'mail', view: contact, group: 'You', sub: 'Feedback, issues and ideas: we read every message' },
+  faq: { title: 'FAQs', icon: 'info', view: faq, group: 'You', sub: 'Answers about the app, your data and the NEET (UG) exam' },
 };
 
 /* ---------- Navigation ---------- */

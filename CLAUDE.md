@@ -30,13 +30,14 @@ Don't reintroduce Vercel/serverless hosting. See README.md for user-facing setup
 ```
 index.html → assets/js/app.js (router, nav, onboarding, timers, boot)
   store.js     single in-memory state S(), persisted to localStorage key 'ynb:v1'; commit() saves + notifies subscribers
-  views/*.js   one module per route; export mount(el, params, { setSub }) → optional unmount fn
+  views/*.js   one module per route (faq.js and contact.js hold the FAQs and the public email/Instagram/X handles); export mount(el, params, { setSub }) → optional unmount fn
   cloud.js     Supabase auth + whole-state sync (one jsonb row per user in public.neet_user_data)
   ai.js        runAI(task, params): own key → providers.js directly; else POST to the Supabase "neet-ai" Edge Function
   prompts.js   TASKS whitelist + sanitize() + buildMessages(); shared with the Edge Function
   providers.js Gemini (Auto model fallback chain) + OpenAI adapters; shared with the Edge Function
   data.js      EXAM, SUBJECTS, CHAPTERS (subject → chapters with class, weight, ncert, topics), LIBRARY, HABITS, TIPS
-  content.js   lazy loader for content/<subject>.js (offline notes + question bank); toMCQ() shuffles options
+  content.js   lazy loader for content/<subject>.js (offline notes + question bank) merged with quizbank/<subject>.js
+               (extra questions, BANK: chapterId → items, de-duplicated by stem); toMCQ() shuffles options
   config.js    public site config (Supabase URL/key, feature flags, display-only AI limits)
 ```
 
@@ -87,6 +88,7 @@ index.html → assets/js/app.js (router, nav, onboarding, timers, boot)
 
 ## Content conventions
 
+- Every chapter should keep at least 30 offline questions (content quiz + quizbank).
 - NEET accuracy matters: everything must match the current NCERT Class 11–12 books and the NMC syllabus. Keep that standard in prompts
   and in content/*.js. Quiz bank items are `[question, [4 options], correctIndex, explanation]`; avoid "option A/B" references in
   explanations because options are shuffled.

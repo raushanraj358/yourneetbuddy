@@ -81,7 +81,7 @@ export function mount(el, params) {
     let form;
     if (cfg.mode === 'chapter') {
       form = `${subjectChips()}${chapterSelect(`All ${subjectById(cfg.subject).short} chapters (mixed)`)}
-        <div class="field"><span class="label">Number of questions</span><div class="seg">${[10, 20, 0].map((c) => `<button class="${cfg.count === c ? 'on' : ''}" data-count="${c}">${c || 'All'}</button>`).join('')}</div></div>
+        <div class="field"><span class="label">Number of questions</span><div class="seg">${[10, 20, 30, 0].map((c) => `<button class="${cfg.count === c ? 'on' : ''}" data-count="${c}">${c || 'All'}</button>`).join('')}</div></div>
         ${practiceSwitch()}
         <div class="notice info">${icon('book', 18)}<div style="flex:1">Built-in NCERT-based questions — no internet or AI needed. ${ch ? `Testing <b>${esc(ch.name)}</b>.` : 'Questions are mixed from every chapter of the subject.'}</div></div>
         <div class="row wrap"><button class="btn accent lg" data-start-chapter>${icon('play', 17)} Start chapter test</button></div>`;
@@ -399,7 +399,7 @@ export function mount(el, params) {
     const b = e.target.closest('button');
     if (!b || b.disabled) return;
     const d = b.dataset;
-    if (d.mode) { cfg.mode = d.mode; if (d.mode === 'chapter' && ![10, 20, 0].includes(cfg.count)) cfg.count = 10; if (d.mode === 'ai' && ![5, 10, 15, 20].includes(cfg.count)) cfg.count = 10; lastError = null; draw(); }
+    if (d.mode) { cfg.mode = d.mode; if (d.mode === 'chapter' && ![10, 20, 30, 0].includes(cfg.count)) cfg.count = 10; if (d.mode === 'ai' && ![5, 10, 15, 20].includes(cfg.count)) cfg.count = 10; lastError = null; draw(); }
     else if (d.subject) { cfg.subject = d.subject; cfg.chapter = ''; cfg.topic = ''; draw(); }
     else if (d.topic !== undefined) { cfg.topic = cfg.topic === d.topic ? '' : d.topic; draw(); }
     else if (d.diff) { cfg.difficulty = d.diff; draw(); }
